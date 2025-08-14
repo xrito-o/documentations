@@ -1,0 +1,212 @@
+{"0": {
+    "doc": "Basics",
+    "title": "✅ PART 1: BASICS",
+    "content": ". 1. 🕰️ History of Linux Operating System . | Linux was created in 1991 by Linus Torvalds, a student from Finland. | It started as a free and open-source alternative to UNIX. | Over time, it became a powerful OS used in servers, supercomputers, Android phones, and even smart devices. | . 2. 🌐 The Open Source Project and OSI . | Open Source means the source code is open to everyone to view, use, and modify. | The Open Source Initiative (OSI) checks if software licenses follow open-source rules. | Open source promotes collaboration, sharing, and innovation. | . 3. 📜 Open Source Licenses and Standards . Licenses explain how you can use or share open-source software. | GPL (General Public License) . | You can use, change, and share it. | But if you share modified code, you must share the source code too. | . | LGPL (Lesser GPL) . | Similar to GPL but allows linking with non-GPL software. | . | CDDL (Common Development and Distribution License) . | More flexible, but not always compatible with GPL. | . | . These licenses protect user freedom while allowing collaboration. 4. 🐧 Overview of Major Linux Distributions (Distros) . Linux comes in many flavors, called distributions (distros). Each one is a bit different. | Distribution | Best For | Notes | . | Ubuntu | Beginners | User-friendly, based on Debian | . | Debian | Stability | Very stable, used in servers | . | Fedora | Developers | New features, backed by Red Hat | . | Arch | Advanced users | Lightweight, fully customizable | . | AlmaLinux / Rocky | Servers | Based on Red Hat, used in enterprises | . | Kali Linux | Security experts | Tools for hacking and security testing | . 5. 🏗️ Overview of the Different Linux OS Architecture . Linux has a layered architecture: . | Hardware – Physical parts (CPU, RAM, disk) | Kernel – The core that talks to the hardware | Shell – Interface for users to type commands (e.g., Bash) | Applications – Programs like web browsers, text editors, etc. | . This design makes Linux modular, secure, and stable. ",
+    "url": "/maths/docs/01-Linux-Fundamentals/1.1-linux-fundamentals-basics.html#-part-1-basics",
+    
+    "relUrl": "/docs/01-Linux-Fundamentals/1.1-linux-fundamentals-basics.html#-part-1-basics"
+  },"1": {
+    "doc": "Basics",
+    "title": "Basics",
+    "content": " ",
+    "url": "/maths/docs/01-Linux-Fundamentals/1.1-linux-fundamentals-basics.html",
+    
+    "relUrl": "/docs/01-Linux-Fundamentals/1.1-linux-fundamentals-basics.html"
+  },"2": {
+    "doc": "Installation",
+    "title": "Installation",
+    "content": "Here’s a simple explanation of the Installation section: . 🔧 Installation Basics in Linux . 1. 🖥️ Designing the Disk Partitioning Scheme . Partitioning = Dividing your hard drive into sections for different purposes. Common Linux partitions: . | / – Root: Main system files (required). | /home – Personal files for users (optional but useful). | /boot – Stores files needed to start Linux (required). | swap – Used as virtual memory when RAM is full (optional). | /var, /opt, /usr – Used for special software/data (optional). | . ✅ Example layout: . /boot – 512 MB / – 20 GB (or more) /home – Remaining space swap – 2 GB (or more, based on your RAM) . 2. 💽 Ensuring /boot Conforms to Hardware Requirements . | The /boot partition stores the kernel and bootloader (e.g., GRUB). | On UEFI systems, you need an EFI System Partition: . | Format: FAT32 | Size: 512 MB to 1 GB | Mount point: /boot/efi | . | On BIOS systems, /boot is just a normal ext4 partition. | . 👉 Make sure your boot partition is properly formatted and large enough. 3. 🔁 Concept of Swap Space . | Swap is disk space used like extra RAM. | Helps when your system runs out of memory. | Can be a partition or a swap file. | . Recommended sizes: . | RAM &lt; 2 GB → swap = 2x RAM | RAM 2–8 GB → swap = same as RAM | RAM &gt; 8 GB → swap = 2–4 GB (or more if using hibernation) | . 4. 📦 Understanding LVM (Logical Volume Manager) . | LVM is a flexible way to manage disk space. | Instead of fixed partitions, LVM allows you to: . | Resize volumes easily (without reboot). | Combine multiple drives into one logical group. | Create snapshots (useful for backups/testing). | . | . LVM structure: . Physical Volume (PV) → Volume Group (VG) → Logical Volume (LV) . ✅ Benefits: . | Easier resizing | Better disk management | Ideal for servers or advanced setups | . ",
+    "url": "/maths/docs/01-Linux-Fundamentals/1.2-linux-fundamentals-installation.html",
+    
+    "relUrl": "/docs/01-Linux-Fundamentals/1.2-linux-fundamentals-installation.html"
+  },"3": {
+    "doc": "Booting the System",
+    "title": "Booting the System",
+    "content": ". 🔧 1. BIOS Boot Sequence . | BIOS (Basic Input/Output System): . | Initializes hardware (CPU, RAM, keyboard, disk, etc.) | Looks for a bootable device (like HDD, SSD, USB) | Loads the first sector (MBR or GPT) into memory | Passes control to the bootloader (GRUB/LILO) | . | . 🚀 2. Linux Boot Events Overview . | Boot Process Stages: . | BIOS/UEFI initializes hardware | Bootloader (e.g., GRUB) loads the kernel | Kernel initializes hardware and mounts root filesystem | init/systemd runs as PID 1 and starts user-space services | . | Important Utilities: . | dmesg – Displays kernel ring buffer messages (hardware detection, drivers, errors) . dmesg | less . | journalctl -k – Shows kernel messages (systemd) | lsinitrd or lsinitramfs – Lists content of initramfs/initrd (temporary root before real rootfs) | cat /proc/cmdline – View current kernel boot options | . | . 💻 3. Common Commands to the Boot Loader (GRUB) . At the GRUB menu: . | Press e to edit boot entry | You can modify: . | Kernel path | Initrd path | Kernel parameters | . | . Common GRUB commands: . | set root=(hd0,1) – Sets the root partition | linux /vmlinuz root=/dev/sda1 ro – Loads kernel | initrd /initrd.img – Loads initramfs | boot – Boots with the current setup | . ⚙️ 4. Kernel Options at Boot Time . Kernel boot parameters affect system behavior: . | Examples: . | single or 1 – Boots into single-user mode | init=/bin/bash – Skips init system and gives a root shell | nomodeset – Disables kernel mode setting (graphics) | quiet – Reduces boot messages | root=/dev/sda1 – Specifies root filesystem | . | . To apply: . | At GRUB menu, press e | Append options to the linux line | Press Ctrl + X or F10 to boot | . 🔄 5. Init Systems: SysVinit, SystemD, Upstart . | Feature | SysVinit | Upstart | SystemD (modern default) | . | PID 1 process | /sbin/init | /sbin/init | /lib/systemd/systemd | . | Init files | /etc/init.d/* | /etc/init/*.conf | Unit files in /etc/systemd/system/ | . | Parallel | No | Yes | Yes | . | Active distro | Legacy (Debian, Slackware) | Older Ubuntu (9.10–14.10) | Most modern distros (Ubuntu, Arch, RHEL) | . 🔁 6. Changing Runlevels / Targets / Single User Mode . SysVinit (legacy) . | Runlevels: . | 0: Halt | 1: Single user | 3: Multi-user | 5: Multi-user + GUI | 6: Reboot | . | Commands: . init 1 # Switch to single-user mode runlevel # Shows previous and current runlevel telinit 3 # Switch to runlevel 3 . | . SystemD (modern) . | Targets: . | rescue.target – Single-user mode | multi-user.target – Non-GUI | graphical.target – GUI | . | Commands: . systemctl isolate rescue.target # Switch to single-user systemctl get-default # Show default target systemctl set-default graphical.target . | . 🔚 7. Reboot &amp; Shutdown (with User Alerts) . Commands: . shutdown -r now # Reboot immediately shutdown -h +10 \"System will shut down in 10 minutes.\" # Graceful halt with warning halt # Immediate halt poweroff # Turn off the system reboot # Reboot the system . Alerting Logged-in Users: . | wall sends messages to all terminals: . wall \"System will reboot in 5 minutes. Please save your work.\" . | shutdown does this automatically when scheduled: . shutdown -r +5 \"System rebooting for maintenance.\" . | . ",
+    "url": "/maths/docs/01-Linux-Fundamentals/1.3-linux-fundamentals-booting-the-system.html",
+    
+    "relUrl": "/docs/01-Linux-Fundamentals/1.3-linux-fundamentals-booting-the-system.html"
+  },"4": {
+    "doc": "The Linux Terminal / Command Line",
+    "title": "1. 🖥️ The Linux Terminal / Command Line",
+    "content": "🔓 Opening the Terminal . | GUI Desktop (e.g., GNOME, XFCE): . | Press Ctrl + Alt + T or search “Terminal” in your applications menu. | . | TTY Console (CLI only systems): . | Use Ctrl + Alt + F1 to F6 to switch to a terminal session. | . | . 2. ⚙️ Terminal Settings . Terminal settings depend on the emulator you’re using (e.g., GNOME Terminal, Kitty, Alacritty): . | Font / Color scheme: Usually in Preferences → Appearance. | Scrollback / History Size: Preferences → Scrolling. | Shell configuration file: Typically ~/.bashrc or ~/.zshrc. | . 3. 🔁 Common Terminal Commands . | Command | Description | . | bash | Starts a new Bash shell session. | . | echo | Prints text or variables: echo $HOME. | . | env | Shows current environment variables. | . | export VAR=value | Sets environment variables: export PATH=$PATH:/new/path. | . | pwd | Prints current working directory. | . | set | Shows or sets shell options and variables. | . | unset | Removes shell variables: unset VAR. | . | man command | Shows manual for a command: man ls. | . | uname -a | Displays system information. | . | history | Lists previously run commands. | . | cat ~/.bash_history | Shows command history from file. | . 4. 🎨 Customizing the Shell Prompt &amp; Environment . | PS1 is the variable that defines your prompt: . export PS1=\"\\u@\\h:\\w\\$ \" . | \\u – Username | \\h – Hostname | \\w – Working directory | $ – Dollar sign (or # for root) | . | Example: Colorful Prompt . export PS1=\"\\[\\e[1;32m\\]\\u@\\h\\[\\e[0m\\]:\\[\\e[1;34m\\]\\w\\[\\e[0m\\]\\$ \" . | To make permanent, add to ~/.bashrc. | . 5. ⚡ Creating Aliases . | Temporarily create an alias: . alias ll='ls -alF' . | Permanently add to ~/.bashrc or ~/.bash_aliases: . echo \"alias update='sudo pacman -Syu'\" &gt;&gt; ~/.bashrc source ~/.bashrc . | . ",
+    "url": "/maths/docs/01-Linux-Fundamentals/1.4-linux-fundamentals-the-linux-terminal-and-command-line.html#1-%EF%B8%8F-the-linux-terminal--command-line",
+    
+    "relUrl": "/docs/01-Linux-Fundamentals/1.4-linux-fundamentals-the-linux-terminal-and-command-line.html#1-️-the-linux-terminal--command-line"
+  },"5": {
+    "doc": "The Linux Terminal / Command Line",
+    "title": "The Linux Terminal / Command Line",
+    "content": ". ",
+    "url": "/maths/docs/01-Linux-Fundamentals/1.4-linux-fundamentals-the-linux-terminal-and-command-line.html",
+    
+    "relUrl": "/docs/01-Linux-Fundamentals/1.4-linux-fundamentals-the-linux-terminal-and-command-line.html"
+  },"6": {
+    "doc": "Determining Attached Hardware and Computer Peripherals",
+    "title": "🔍 Determining Attached Hardware and Computer Peripherals",
+    "content": ". 1. 🧠 How Linux Detects Hardware . Linux uses several key components to detect and manage hardware: . | Component | Description | . | sysfs | A virtual filesystem (usually at /sys) exposing kernel device details. | . | udev | The device manager for the Linux kernel; dynamically handles device nodes in /dev. | . | dbus | Message bus system allowing applications and services to communicate, including hardware events. | . Example: To view a USB device’s path: . ls /sys/bus/usb/devices/ . 2. 🛠️ Tools to List Hardware Info . | Command | Purpose |   | . | lspci | Lists PCI devices (e.g., graphics, network cards). |   | . | lsusb | Lists USB devices. |   | . | lsblk | Lists block devices (disks, partitions). |   | . | lscpu | Shows CPU architecture details. |   | . | lshw | Lists all hardware (requires sudo). |   | . | inxi -Fx | A comprehensive system/hardware report (install with sudo pacman -S inxi or apt install inxi). |   | . | hwinfo | Detailed hardware information (may need installation). |   | . | `dmesg | grep` | Useful for boot-time hardware detection logs. |   | . | cat /proc/cpuinfo | Detailed CPU info. |   | . | cat /proc/meminfo | RAM info. |   | . 3. 🔌 Tools to Manipulate USB Devices . | modprobe: Load or remove kernel modules. | . Examples: . sudo modprobe usb_storage # Load USB storage module sudo modprobe -r usb_storage # Remove it . Check modules: . lsmod | grep usb . 4. 💽 Manually Mount and Unmount Filesystems . | List devices: | . lsblk . | Mount a device: | . sudo mount /dev/sdX1 /mnt . | Unmount: | . sudo umount /mnt . Make sure the mount point /mnt exists, or create it using mkdir. 5. 🔁 Automatically Mount Filesystems on Boot . Edit /etc/fstab — Format: . &lt;device&gt; &lt;mount_point&gt; &lt;filesystem_type&gt; &lt;options&gt; &lt;dump&gt; &lt;pass&gt; . Example: . UUID=abcd-1234 /mnt/usbdrive ext4 defaults 0 2 . | Get UUID: | . blkid . Be careful: Mistakes in /etc/fstab can prevent your system from booting. Test with: . sudo mount -a . ",
+    "url": "/maths/docs/01-Linux-Fundamentals/1.5-linux-fundamentals-determining-attached-hardware-and-computer-peripherals.html#-determining-attached-hardware-and-computer-peripherals",
+    
+    "relUrl": "/docs/01-Linux-Fundamentals/1.5-linux-fundamentals-determining-attached-hardware-and-computer-peripherals.html#-determining-attached-hardware-and-computer-peripherals"
+  },"7": {
+    "doc": "Determining Attached Hardware and Computer Peripherals",
+    "title": "Determining Attached Hardware and Computer Peripherals",
+    "content": ". ",
+    "url": "/maths/docs/01-Linux-Fundamentals/1.5-linux-fundamentals-determining-attached-hardware-and-computer-peripherals.html",
+    
+    "relUrl": "/docs/01-Linux-Fundamentals/1.5-linux-fundamentals-determining-attached-hardware-and-computer-peripherals.html"
+  },"8": {
+    "doc": "Package Management",
+    "title": "📦 Linux Package Management &amp; File System Structure",
+    "content": ". 1. 📁 The Linux File System Structure (Simplified) . | Directory | Purpose | . | / | Root of the file system. | . | /bin | Essential binary programs (e.g. ls, cp, bash). | . | /sbin | System binaries (e.g. reboot, mount). | . | /etc | Configuration files. | . | /dev | Device files. | . | /home | User directories. | . | /lib | Essential shared libraries. | . | /opt | Optional software. | . | /usr | User-installed software and libraries. | . | /var | Variable files (e.g., logs, spools). | . | /tmp | Temporary files. | . | /mnt, /media | Mount points for removable storage. | . 2. 📚 Managing Shared Libraries . | Tool / File | Description | . | ldd binary | Lists shared libraries required by a binary. | . | ldconfig | Updates the dynamic linker runtime bindings. | . | /etc/ld.so.conf | File listing directories for shared libraries. | . | LD_LIBRARY_PATH | Temporary environment variable to specify additional library paths. | . Example: . export LD_LIBRARY_PATH=/custom/lib:$LD_LIBRARY_PATH . 3. 📦 Debian Package Management . a. /etc/apt/sources.list . Defines package sources: . deb http://deb.debian.org/debian stable main contrib non-free . b. apt-get – Basic commands: . sudo apt-get update # Update package list sudo apt-get upgrade # Upgrade installed packages sudo apt-get install pkg # Install a package sudo apt-get remove pkg # Remove a package . c. dpkg . Low-level package tool: . sudo dpkg -i package.deb # Install .deb file sudo dpkg -r package # Remove package dpkg -l | grep pkgname # List package info . d. apt-cache . Query APT package cache: . apt-cache search firefox apt-cache show firefox . e. aptitude (TUI tool, optional) . sudo aptitude # Launch UI sudo aptitude install pkgname . 4. 📦 RPM and YUM Package Management . f. /etc/yum.conf and /etc/yum.repos.d/ . | yum.conf: Main configuration. | .repo files in /etc/yum.repos.d/ define repository sources. | . g. yumdownloader . Download RPMs without installing: . sudo yum install yum-utils yumdownloader package . h. rpm and rpm2cpio . | Install: | . sudo rpm -ivh package.rpm . | Convert .rpm to .cpio archive: | . rpm2cpio file.rpm | cpio -idmv . 5. 🔗 Creating Symbolic and Hard Links . | Link Type | Command | Description | . | Symbolic (soft) link | ln -s target linkname | Points to a file or directory path. | . | Hard link | ln target linkname | Points to same inode; works only within same filesystem. | . Examples: . ln -s /etc/nginx/nginx.conf ~/nginx.conf_link ln /bin/ls ~/ls_hardlink . ",
+    "url": "/maths/docs/01-Linux-Fundamentals/1.6-linux-fundamentals-package-management.html#-linux-package-management--file-system-structure",
+    
+    "relUrl": "/docs/01-Linux-Fundamentals/1.6-linux-fundamentals-package-management.html#-linux-package-management--file-system-structure"
+  },"9": {
+    "doc": "Package Management",
+    "title": "Package Management",
+    "content": ". ",
+    "url": "/maths/docs/01-Linux-Fundamentals/1.6-linux-fundamentals-package-management.html",
+    
+    "relUrl": "/docs/01-Linux-Fundamentals/1.6-linux-fundamentals-package-management.html"
+  },"10": {
+    "doc": "Basic Linux File Management",
+    "title": "📁 Basic Linux File Management",
+    "content": ". 1. 📦 Common Archiving Tools . | Tool | Command Example | Description | . | tar | tar -czvf archive.tar.gz folder/ | Archive and compress files (gzip). | . | gzip / gunzip | gzip file.txt / gunzip file.txt.gz | Compress/decompress single files. | . | zip / unzip | zip archive.zip file1 file2 / unzip archive.zip | Create/extract ZIP archives. | . | xz / unxz | xz file / unxz file.xz | High compression ratio. | . | 7z | 7z a archive.7z file | 7-Zip format (install p7zip). | . 2. 📂 Making Directories . mkdir newdir # Create a directory mkdir -p dir/subdir # Create nested directories . 3. 📄 Copy, Move, Delete Files and Directories . Copy . cp file1.txt file2.txt # Copy a file cp -r dir1/ dir2/ # Copy directory recursively . Move (or Rename) . mv oldname.txt newname.txt # Rename or move file mv file.txt /path/to/destination/ # Move file . Delete . rm file.txt # Delete file rm -r folder/ # Delete directory and contents rm -rf folder/ # Force delete (use with caution) . 4. 🔍 Finding and Locating Files . | Command | Description | Example | . | find | Searches files by name, size, type, etc. | find /home -name \"*.txt\" | . | locate | Uses a database to quickly find files | locate firefox | . | updatedb | Updates the locate database (needs mlocate) | sudo updatedb | . | whereis | Locates binary, source, and man pages | whereis ls | . | which | Shows the path of a command | which python3 | . | type | Shows how a command is interpreted | type cd | . Config file for updatedb: 📄 /etc/updatedb.conf — Exclude specific paths from locate indexing. ",
+    "url": "/maths/docs/01-Linux-Fundamentals/1.7-linux-fundamentals-linux-file-management.html#-basic-linux-file-management",
+    
+    "relUrl": "/docs/01-Linux-Fundamentals/1.7-linux-fundamentals-linux-file-management.html#-basic-linux-file-management"
+  },"11": {
+    "doc": "Basic Linux File Management",
+    "title": "Basic Linux File Management",
+    "content": " ",
+    "url": "/maths/docs/01-Linux-Fundamentals/1.7-linux-fundamentals-linux-file-management.html",
+    
+    "relUrl": "/docs/01-Linux-Fundamentals/1.7-linux-fundamentals-linux-file-management.html"
+  },"12": {
+    "doc": "Text editors, and processing text streams through filters",
+    "title": "📝 Text Editors, Text Streams, Filters, and Redirection",
+    "content": ". 1. 🔤 Vi vs Vim . | Feature | vi | vim (Vi IMproved) | . | Availability | Always installed | May require install (sudo apt install vim) | . | Features | Basic editing | Syntax highlighting, undo, plugins, multi-level undo | . | Usage | Lightweight | Powerful and extensible | . Basic vi / vim Usage: . | Command | Action | . | i | Insert mode | . | Esc | Exit to command mode | . | :w | Save | . | :q | Quit | . | :wq or ZZ | Save and quit | . | :q! | Quit without saving | . | dd | Delete line | . | yy | Yank (copy) line | . | p | Paste line | . 2. 🔁 Output Redirection &amp; GNU Text Utilities . | Tool | Example | Description |   | . | cat | cat file.txt | Print file contents |   | . | cut | cut -d: -f1 /etc/passwd | Cut fields by delimiter |   | . | sort | sort file.txt | Sort lines |   | . | uniq | `sort file.txt | uniq` | Remove duplicates |   | . | expand | expand file.txt | Convert tabs to spaces |   | . | join | join file1 file2 | Join files by common field |   | . | split | split -l 100 file | Split into chunks |   | . | wc | wc -l file.txt | Line/word/char count |   | . | sed | sed 's/foo/bar/' file | Stream edit |   | . | head / tail | head -n 10 file | Show first/last N lines |   | . 3. 🔗 Streams, Pipes, and Redirects . | Symbol | Description |   | . | &gt; | Redirect output to file (overwrite) |   | . | &gt;&gt; | Redirect output to file (append) |   | . | &lt; | Redirect file to command input |   | . | ` | ` | Pipe: output → input of another |   | . | tee | Output to screen and file: `cmd | tee file.txt` |   | . | xargs | Pass input as command arguments: `cat list.txt | xargs rm` |   | . 4. 🔍 Search with Regular Expressions . | Tool | Description | Example |   | . | grep | Basic search | grep \"error\" logfile |   | . | egrep | Extended regex (same as grep -E) | `egrep “foo | bar” file` |   | . | fgrep | Fixed string search (no regex) | fgrep \"text\" file |   | . | sed | Search and replace | sed 's/old/new/g' file.txt |   | . | Regex examples |   |   |   | . | . | Any character |   |   | . | * | Zero or more |   |   | . | ^ | Line start |   |   | . | $ | Line end |   |   | . | [abc] | Match a, b, or c |   |   | . | [^abc] | Not a, b, or c |   |   | . | \\d | Digit (in grep -P) |   |   | . ",
+    "url": "/maths/docs/01-Linux-Fundamentals/1.8-linux-fundamentals-text-editors.html#-text-editors-text-streams-filters-and-redirection",
+    
+    "relUrl": "/docs/01-Linux-Fundamentals/1.8-linux-fundamentals-text-editors.html#-text-editors-text-streams-filters-and-redirection"
+  },"13": {
+    "doc": "Text editors, and processing text streams through filters",
+    "title": "Text editors, and processing text streams through filters",
+    "content": " ",
+    "url": "/maths/docs/01-Linux-Fundamentals/1.8-linux-fundamentals-text-editors.html",
+    
+    "relUrl": "/docs/01-Linux-Fundamentals/1.8-linux-fundamentals-text-editors.html"
+  },"14": {
+    "doc": "File Permissions and Ownership in Linux",
+    "title": "🔐 File Permissions and Ownership in Linux",
+    "content": ". 1. 📄 Default File Permissions &amp; umask . | Default permissions: . | Files: 666 (read &amp; write for all) | Directories: 777 (read, write, execute for all) | . | Actual permissions = Default - umask . | View current umask: . umask . | Example: If umask is 022, new file permission becomes 644 (666 - 022) and directory permission becomes 755 (777 - 022) . | . | . 2. 📜 Reading ls -l Output . ls -l file.txt . Example output: . -rw-r--r-- 1 user group 1234 Jun 5 10:00 file.txt . | Part | Meaning | . | - | File type (- = file, d = directory, l = symlink) | . | rw-r--r-- | Permissions: owner (rw-), group (r–), others (r–) | . | user | File owner | . | group | Group owner | . | 1234 | File size | . | Jun 5 10:00 | Last modified date | . | file.txt | File name | . 3. 🧮 Managing Permissions . a. Numeric (Octal) Permissions . | Digit | Meaning | . | 7 | rwx | . | 6 | rw- | . | 5 | r-x | . | 4 | r-- | . | 0 | --- | . chmod 755 myscript.sh # rwxr-xr-x . b. Symbolic (Text) Permissions . chmod u+x file.txt # Add execute for user chmod g-w file.txt # Remove write for group chmod o=r file.txt # Set read-only for others . c. Group Ownership and Permissions . | Change owner: . chown username file.txt . | Change group: . chgrp groupname file.txt . | Set group and owner: . chown user:group file.txt . | . 4. ⚙️ Customizing File Creation Mask (umask) . | View current umask: . umask . | Temporarily set umask: . umask 027 . | Permanently set: . | Add to ~/.bashrc or /etc/profile: . umask 027 . | . | . ",
+    "url": "/maths/docs/01-Linux-Fundamentals/1.9-linux-fundamentals-file-permissions-and-ownership%20in-linux.html#-file-permissions-and-ownership-in-linux",
+    
+    "relUrl": "/docs/01-Linux-Fundamentals/1.9-linux-fundamentals-file-permissions-and-ownership%20in-linux.html#-file-permissions-and-ownership-in-linux"
+  },"15": {
+    "doc": "File Permissions and Ownership in Linux",
+    "title": "File Permissions and Ownership in Linux",
+    "content": " ",
+    "url": "/maths/docs/01-Linux-Fundamentals/1.9-linux-fundamentals-file-permissions-and-ownership%20in-linux.html",
+    
+    "relUrl": "/docs/01-Linux-Fundamentals/1.9-linux-fundamentals-file-permissions-and-ownership%20in-linux.html"
+  },"16": {
+    "doc": "🔐 OpenSSH Installation in Arch Linux",
+    "title": "📦 Installation",
+    "content": ". | Install the openssh package. sudo pacman -S openssh . | Enable the sshd service to start at boot. sudo systemctl enable sshd.service . | Start the sshd service. sudo systemctl start sshd.service . | . You are now ready to use OpenSSH on your Arch Linux system! 🔐 . ",
+    "url": "/maths/docs/02-linux-services/2024-12-01-openssh.html#-installation",
+    
+    "relUrl": "/docs/02-linux-services/2024-12-01-openssh.html#-installation"
+  },"17": {
+    "doc": "🔐 OpenSSH Installation in Arch Linux",
+    "title": "🔐 OpenSSH Installation in Arch Linux",
+    "content": "This guide walks you through installing and enabling OpenSSH on Arch Linux. ",
+    "url": "/maths/docs/02-linux-services/2024-12-01-openssh.html",
+    
+    "relUrl": "/docs/02-linux-services/2024-12-01-openssh.html"
+  },"18": {
+    "doc": "🔐 bash-documentation",
+    "title": "Bash Documentation",
+    "content": " ",
+    "url": "/maths/docs/03-Bash-Documentation/3.1-bash-documentation.html#bash-documentation",
+    
+    "relUrl": "/docs/03-Bash-Documentation/3.1-bash-documentation.html#bash-documentation"
+  },"19": {
+    "doc": "🔐 bash-documentation",
+    "title": "What is Bash?",
+    "content": "Bash (Bourne Again Shell) is a Unix shell and command language written as a free software replacement for the Bourne shell. It is widely used as the default login shell for Linux distributions and macOS. Bash combines features from the Korn shell (ksh) and the C shell (csh). ",
+    "url": "/maths/docs/03-Bash-Documentation/3.1-bash-documentation.html#what-is-bash",
+    
+    "relUrl": "/docs/03-Bash-Documentation/3.1-bash-documentation.html#what-is-bash"
+  },"20": {
+    "doc": "🔐 bash-documentation",
+    "title": "Key Features",
+    "content": ". | Command Execution: Execute commands interactively or from scripts. | Variables: Support for user-defined and environment variables. | Control Structures: Includes if, for, while, and case statements for scripting. | Functions: Define reusable code blocks. | I/O Redirection: Redirect input, output, and error streams. | Command History: Navigate and reuse previously executed commands. | Globbing: File pattern matching using wildcards like *, ?, and []. | . ",
+    "url": "/maths/docs/03-Bash-Documentation/3.1-bash-documentation.html#key-features",
+    
+    "relUrl": "/docs/03-Bash-Documentation/3.1-bash-documentation.html#key-features"
+  },"21": {
+    "doc": "🔐 bash-documentation",
+    "title": "Basic Commands",
+    "content": "Here are some essential Bash commands to get started: . File and Directory Operations . | ls: List directory contents. | cd: Change the current directory. | pwd: Print the current working directory. | mkdir: Create a new directory. | rm: Remove files or directories. | . File Viewing . | cat: Concatenate and display file contents. | less: View file contents one screen at a time. | head: Display the first few lines of a file. | tail: Display the last few lines of a file. | . Process Management . | ps: Display active processes. | kill: Terminate processes by PID. | top: Monitor system processes in real time. | . ",
+    "url": "/maths/docs/03-Bash-Documentation/3.1-bash-documentation.html#basic-commands",
+    
+    "relUrl": "/docs/03-Bash-Documentation/3.1-bash-documentation.html#basic-commands"
+  },"22": {
+    "doc": "🔐 bash-documentation",
+    "title": "Bash Scripting Basics",
+    "content": "Bash scripts are plain text files containing a series of commands. Creating a Script . | Create a file with a .sh extension, e.g., myscript.sh. | Add the shebang at the top: #!/bin/bash. | Write your script below the shebang. | . Example Script . #!/bin/bash # A simple Bash script echo \"Hello, World!\" name=\"Bash User\" echo \"Welcome, $name!\" . Using the while Loop . A while loop in Bash allows you to execute commands repeatedly as long as a specified condition evaluates to true. Syntax . while [ condition ] do commands done . Example . #!/bin/bash # Using a while loop to count down count=5 while [ $count -gt 0 ]; do echo \"Countdown: $count\" count=$((count - 1)) done echo \"Liftoff!\" . Using the if Statement . The if statement in Bash is used to perform conditional checks. Syntax . if [ condition ]; then commands elif [ another_condition ]; then commands else commands fi . Example . #!/bin/bash # Using an if statement to check a number number=5 if [ $number -gt 10 ]; then echo \"The number is greater than 10.\" elif [ $number -eq 10 ]; then echo \"The number is exactly 10.\" else echo \"The number is less than 10.\" fi . Running the Script . Make the script executable: . chmod +x myscript.sh . Run it: ./myscript.sh . ",
+    "url": "/maths/docs/03-Bash-Documentation/3.1-bash-documentation.html#bash-scripting-basics",
+    
+    "relUrl": "/docs/03-Bash-Documentation/3.1-bash-documentation.html#bash-scripting-basics"
+  },"23": {
+    "doc": "🔐 bash-documentation",
+    "title": "Useful Tips",
+    "content": ". | Use man bash to access the Bash manual. | Use tab completion to speed up typing commands and filenames. | Combine commands using &amp;&amp; (run next if successful) or || (run next if failed). | . ",
+    "url": "/maths/docs/03-Bash-Documentation/3.1-bash-documentation.html#useful-tips",
+    
+    "relUrl": "/docs/03-Bash-Documentation/3.1-bash-documentation.html#useful-tips"
+  },"24": {
+    "doc": "🔐 bash-documentation",
+    "title": "Resources",
+    "content": ". | GNU Bash Manual | Bash Reference Guide | . Thank you for exploring Bash! Happy scripting! . ",
+    "url": "/maths/docs/03-Bash-Documentation/3.1-bash-documentation.html#resources",
+    
+    "relUrl": "/docs/03-Bash-Documentation/3.1-bash-documentation.html#resources"
+  },"25": {
+    "doc": "🔐 bash-documentation",
+    "title": "🔐 bash-documentation",
+    "content": " ",
+    "url": "/maths/docs/03-Bash-Documentation/3.1-bash-documentation.html",
+    
+    "relUrl": "/docs/03-Bash-Documentation/3.1-bash-documentation.html"
+  },"26": {
+    "doc": "linux-fundamentals",
+    "title": "linux-fundamentals",
+    "content": " ",
+    "url": "/maths/docs/02-linux-services/",
+    
+    "relUrl": "/docs/02-linux-services/"
+  },"27": {
+    "doc": "linux-fundamentals",
+    "title": "linux-fundamentals",
+    "content": " ",
+    "url": "/maths/docs/01-Linux-Fundamentals/",
+    
+    "relUrl": "/docs/01-Linux-Fundamentals/"
+  },"28": {
+    "doc": "bash-documentation",
+    "title": "bash-documentation",
+    "content": " ",
+    "url": "/maths/docs/03-Bash-Documentation/",
+    
+    "relUrl": "/docs/03-Bash-Documentation/"
+  },"29": {
+    "doc": "Home",
+    "title": "Home",
+    "content": ". ",
+    "url": "/maths/",
+    
+    "relUrl": "/"
+  }
+}

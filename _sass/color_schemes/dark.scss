@@ -1,0 +1,53 @@
+/*
+$color-scheme: dark;
+$body-background-color: $grey-dk-300;
+$body-heading-color: $grey-lt-000;
+$body-text-color: $grey-lt-300;
+$link-color: $blue-000;
+$nav-child-link-color: $grey-dk-000;
+$sidebar-color: $grey-dk-300;
+$base-button-color: $grey-dk-250;
+$btn-primary-color: $blue-200;
+$code-background-color: #31343f; // OneDarkJekyll default for syntax-one-dark-vivid
+$code-linenumber-color: #dee2f7; // OneDarkJekyll .nf for syntax-one-dark-vivid
+$feedback-color: darken($sidebar-color, 3%);
+$table-background-color: $grey-dk-250;
+$search-background-color: $grey-dk-250;
+$search-result-preview-color: $grey-dk-000;
+$border-color: $grey-dk-200;
+
+@import "./vendor/OneDarkJekyll/syntax"; // this is the one-dark-vivid atom syntax theme
+
+*/
+
+
+$color-scheme: dark;
+
+// Base
+$body-background-color: #181A1B;
+$sidebar-color: #1C1F20;
+$feedback-color: #1a1a1a;
+
+// Text
+$body-heading-color: #ffffff;
+$body-text-color: #d0d0d0;
+$link-color: #bb86fc;                   // Soft purple links
+$nav-child-link-color: #a6a6a6;
+
+// Buttons
+$base-button-color: #1f1f1f;
+$btn-primary-color: #bb86fc;            // Match link color
+
+// Code blocks
+$code-background-color: #1a1a1a;
+$code-linenumber-color: #888888;
+
+// Tables & borders
+$table-background-color: #161616;
+$border-color: #2a2a2a;
+
+// Search
+$search-background-color: #161616;
+$search-result-preview-color: #cccccc;
+
+@import "./vendor/OneDarkJekyll/syntax";
