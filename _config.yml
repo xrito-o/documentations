@@ -6,7 +6,7 @@ plugins:
 ################################################################################################
 
 url: "https://xrito-o.github.io"  # No trailing slash
-baseurl: "/maths"                   # The subfolder name, starts with /
+baseurl: "/documentations"                   # The subfolder name, starts with /
 
 ################################################################################################
 
