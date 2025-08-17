@@ -1,4 +1,4 @@
 ---
-title: bash-documentation
+title: bash-documentations
 nav_order: 4
 ---
